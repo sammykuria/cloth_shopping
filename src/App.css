@@ -1,16 +1,24 @@
 .first{
-position: relative;       /* important: so overlay is positioned inside */
+  display: flex;
+  justify-content: center;
+  margin-left: 5%;
+  gap: 5rem;
+  padding: 20px;
+/* position: relative;       
   width: 100%;
-  max-height: 600px;        /* optional, control size */
-  overflow: hidden;
+  max-height: 600px;       
+  overflow: hidden; */
 }
 .firsttext {
-   position: absolute;
-  top: 50%;                 /* center vertically */
-  left: 50%;                /* center horizontally */
-  transform: translate(-50%, -50%);  /* perfect centering */
-  text-align: center;
-  color: white;  
+  flex: 1.0; /* take less space than the image */
+  /* max-width: 500px; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  align-items: flex-start;
+  text-align: left;
+  color: #000;
+  padding: 1rem; 
 
 }
 .firsttext h2{
@@ -23,13 +31,47 @@ position: relative;       /* important: so overlay is positioned inside */
   font-size: 30px;
   font-weight: 400;
 }
+/* Hero image side */
+.firstimage {
+  flex: 0.5; /* take slightly more space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .firstimage img{
- width: 100%;
-  height: 100vh;
-  display: block;
-  /* object-fit: cover;  */
+ width: 105%;
+  height: auto;
+  max-height: 90vh; /* prevent overflow */
+  /* object-fit: cover; */
+  border-radius: 12px;
 }
+.jeseeimg{
+  width: 100%;
+  height: auto;
+}
+.jeseetext p{
+font-size: 12px;
+}
+.jeseetexty{
+  font-size: 18px;
+font-weight: 200;
+}
+#tellme{
+  width: 110%;
+  background-color: none;
+  line-height: 30px;
+}
+.cardcontainer{
+  background-color: rgba(160, 9, 9, 0.158);
+}
+.homecardcont{
+display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 3 cards per row */
+   width:83%;
+  gap: 2rem;
+}
+
 
 
 
