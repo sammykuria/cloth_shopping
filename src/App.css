@@ -1,38 +1,234 @@
-.App {
+.first{
+position: relative;       /* important: so overlay is positioned inside */
+  width: 100%;
+  max-height: 600px;        /* optional, control size */
+  overflow: hidden;
+}
+.firsttext {
+   position: absolute;
+  top: 50%;                 /* center vertically */
+  left: 50%;                /* center horizontally */
+  transform: translate(-50%, -50%);  /* perfect centering */
   text-align: center;
+  color: white;  
+
+}
+.firsttext h2{
+
+  font-size: 80px;
+  font-weight: 400;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.firsttext p{
+  font-size: 30px;
+  font-weight: 400;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.firstimage img{
+ width: 100%;
+  height: 100vh;
+  display: block;
+  /* object-fit: cover;  */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+
+
+/* From Uiverse.io by Spacious74 */ 
+.container {
+  border: solid 1px #8d8d8d;
+  padding: 3%;
+  border-radius: 20px;
+  background-color: #fff;
+  width: 20%;
+  height: 50vh;
+  margin: 4%;
+}
+
+.container .heading {
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  font-weight: bolder;
+}
+
+.form {
+  max-width: 300px;
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.form .btn-container {
+  width: 100%;
+  display: flex;
   align-items: center;
+  gap: 20px;
+}
+
+.form .btn {
+    margin-top: 7%;
+  padding: 10px 20px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  border-radius: 10px;
+  border: solid 1px #1034aa;
+  border-bottom: solid 1px #90c2ff;
+  background: linear-gradient(135deg, #0034de, #006eff);
+  color: #fff;
+  font-weight: bolder;
+  transition: all 0.2s ease;
+  box-shadow: 0px 2px 3px #000d3848, inset 0px 4px 5px #0070f0,
+    inset 0px -4px 5px #002cbb;
+}
+
+.form .btn:active {
+  box-shadow: inset 0px 4px 5px #0070f0, inset 0px -4px 5px #002cbb;
+  transform: scale(0.995);
+}
+
+.input-field {
+  padding: 3%;
+  position: relative;
+}
+
+.input-field label {
+  position: absolute;
+  color: #8d8d8d;
+  pointer-events: none;
+  background-color: transparent;
+  left: 15px;
+  transform: translateY(0.6rem);
+  transition: all 0.3s ease;
+}
+
+.input-field input {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: solid 1px #8d8d8d;
+  letter-spacing: 1px;
+  width: 100%;
+}
+
+.input-field input:focus,
+.input-field input:valid {
+  outline: none;
+  border: solid 1px #0034de;
+}
+
+.input-field input:focus ~ label,
+.input-field input:valid ~ label {
+  transform: translateY(-51%) translateX(-10px) scale(0.8);
+  background-color: #fff;
+  padding: 0px 5px;
+  color: #0034de;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: 100px;
+}
+
+.form .passicon {
+  cursor: pointer;
+  font-size: 1.3rem;
+  position: absolute;
+  top: 6px;
+  right: 8px;
+}
+
+.form .close {
+  display: none;
+}
+span{
+  color : #0000ff; cursor : pointer;
+}
+
+.loginmanenoz{
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+}
+.noweakness img{
+width: 133%;
+height: 100vh;
 }
 
-.App-link {
-  color: #61dafb;
+.navcont{
+display: flex;
+align-items: center;
+justify-content: space-around;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.cataloguecontainer ul li{
+list-style: none;
+display: flex;
+}
+.cataloguecontainer ul {
+list-style: none;
+display: flex;
+gap: 2rem;
+}
+.cataloguecontainer ul li a{
+text-decoration: none;
+color: black;
+}
+
+.Accart ul li{ 
+list-style: none;
+display: flex;
+}
+.Accart ul { 
+list-style: none;
+display: flex;
+gap: 2rem;
+}
+ 
+
+.Accart ul li a{ 
+text-decoration: none;
+color: black;
+}
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 600px) {
+
+.firstimage img{
+  width: 75%;
+}
+.firsttext{
+
+}
+
+  .firsttext h2{
+  font-size: 25px;
+  font-weight: 400;
+}
+
+.firsttext p{
+  font-size: 15px;
+  font-weight: 400;
+}
 }
