@@ -27,7 +27,7 @@ export function SimpleAddToCart({ product }) {
   useEffect(() => {
     async function fetchStock() {
       try {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from('products')
           .select('stock_quantity')
           .eq('id', product.id)
