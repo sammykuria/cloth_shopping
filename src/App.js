@@ -13,34 +13,42 @@ import Checkout from './Components/Checkout';
 import {SimpleCart} from './Components/SimpleCart';
 import { LowStockAlerts } from './Components/LowStockAlerts';
 import { SalesAnalytics } from './Components/SalesAnalytic';
+import Receipt from './Components/Receipt';
 // import {CartProvider} from 'react-use-cart'
-
+import { useNavigate } from 'react-router-dom';
 
 function App() {
-  const [ user, setUser ] = useState(null)
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
-   useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user || null);
-      }
-      
-    );
-    
-
-    // get current user on first load
+  useEffect(() => {
+    // Fetch current session on load
     supabase.auth.getSession().then(({ data }) => {
       setUser(data.session?.user || null);
     });
 
+    // Subscribe to login/logout changes
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user || null);
+
+      // Optional: Redirect on logout
+      if (event === 'SIGNED_OUT') {
+        localStorage.removeItem('cart');
+        navigate('/');
+      }
+    });
+
+    // Cleanup listener when component unmounts
     return () => {
       authListener.subscription.unsubscribe();
     };
-  }, []);
+  }, [navigate]);
 
   async function handleLogout() {
     await supabase.auth.signOut();
     setUser(null);
+    localStorage.removeItem('cart');
+    navigate('/');
   }
 
 
@@ -49,16 +57,17 @@ function App() {
     <NavBar user={user} handleLogout={handleLogout} />
    
     <Routes>
-      <Route path='/' element={<Home />} />
+      <Route path='/' element={<Home user={user} />} />
        <Route path='/login' element={<Signin />} />
          <Route path='/admin' element={<AdminDash />} />
        <Route path='/signup' element={<Signup />} />
-        <Route path='/shopnow' element={<AllProducts />} />
+        <Route path='/shopnow' element={<AllProducts user={user} />} />
         <Route path='/details/:id' element={<ProductDetail />} />
         <Route path='/cart' element={<SimpleCart user={user} />} />
         <Route path='/lowstockalert' element={<LowStockAlerts />} />
          <Route path='/salesanalytic' element={<SalesAnalytics />} />
          <Route path='/checkout' element={<Checkout />} />
+    <Route path='/receipt' element={<Receipt />} />
     </Routes>
 
     </div>
