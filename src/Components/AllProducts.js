@@ -100,6 +100,9 @@ function AllProducts() {
         console.log("Current role:", userRole)
     }
 
+    console.log(loading, addProduct, refreshRole)
+
+
 
   return (
     <div>
