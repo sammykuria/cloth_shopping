@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from './supabaseClient'
 import { updateProductStock } from './Utils';
@@ -16,14 +16,7 @@ function AdminDash() {
     image_url: '',
   })
   const navigate = useNavigate()
-
-  // Single useEffect to handle authentication and data fetching
-  useEffect(() => {
-    checkUser()
-  },[]) // Empty dependency array - runs only once
-
-  async function checkUser() {
-    // Get current session
+const checkUser = useCallback(async () => {
     const { data: { session } } = await supabase.auth.getSession()
     
     if (!session) {
@@ -34,28 +27,28 @@ function AdminDash() {
 
     setUser(session.user)
 
-    // Check role from localStorage or fetch from profiles
     const storedRole = localStorage.getItem('role')
     let userRole = storedRole
 
-    // If not in localStorage or not admin, fetch from profiles table
     if (!storedRole || storedRole !== 'admin') {
       userRole = await getUserRole(session.user.id)
       setRole(userRole)
-      localStorage.setItem('role', userRole) // Store for future use
+      localStorage.setItem('role', userRole)
     } else {
       setRole(storedRole)
     }
-    
-    // If user is admin, fetch products
+
     if (userRole === 'admin') {
       await fetchProducts()
     } else {
       alert('Access denied. Admin only.')
       navigate('/')
-      return
     }
-  }
+  }, [navigate]) // ✅ include navigate dependency
+
+  useEffect(() => {
+    checkUser()
+  }, [checkUser]) // ✅ no warning now
 
   async function getUserRole(userId) {
     try {
