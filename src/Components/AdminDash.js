@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from './supabaseClient'
+import { updateProductStock } from './Utils';
+
 
 function AdminDash() {
   const [products, setProducts] = useState([])
@@ -18,7 +20,7 @@ function AdminDash() {
   // Single useEffect to handle authentication and data fetching
   useEffect(() => {
     checkUser()
-  }, []) // Empty dependency array - runs only once
+  },[]) // Empty dependency array - runs only once
 
   async function checkUser() {
     // Get current session
@@ -198,7 +200,7 @@ function AdminDash() {
         <p><strong>Logged in as:</strong> {user?.email} | <strong>Role:</strong> {role}</p>
       </div>
 
-      {/* Add New Product Form */}
+      
       <div className="add-product-form">
         <h2>Add New Product</h2>
         <form onSubmit={handleAddProduct}>
@@ -279,13 +281,15 @@ function AdminDash() {
         </div>
       )}
 
-      {/* Products List */}
+     
       <div className="products-list">
         <h2>Manage Products ({products.length})</h2>
         {products.length === 0 ? (
           <p>No products found.</p>
         ) : (
           <div className="products-grid">
+
+
             {products.map(product => (
               <div key={product.id} className="product-card">
                 <img src={product.image_url} alt={product.name} />
@@ -293,19 +297,43 @@ function AdminDash() {
                   <h3>{product.name}</h3>
                   <p className="price">${product.price}</p>
                 </div>
+
+
+                 <div className="quantity-info">
+              <p>Stock: {product.stock_quantity}</p>
+              <p>Sold: {product.sold_quantity || 0}</p>
+            </div>
+
                 <div className="product-actions">
+
+
+                   <div className="admin-controls">
+                  <button onClick={() => updateProductStock(product.id, product.stock_quantity + 10)}>
+                    +10 Stock
+                  </button>
+
+                  <button onClick={() => updateProductStock(product.id, product.stock_quantity - 1)}>
+                    -1 Stock
+                  </button>
+                </div>
+
+
                   <button 
                     onClick={() => startEdit(product)}
                     className="btn btn-warning"
                   >
                     Edit
                   </button>
+
                   <button 
                     onClick={() => handleDeleteProduct(product.id)}
                     className="btn btn-danger"
                   >
                     Delete
                   </button>
+
+
+
                 </div>
               </div>
             ))}

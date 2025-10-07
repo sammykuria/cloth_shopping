@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { CartIcon} from './CartIcon'
+import { useCart } from 'react-use-cart';
 
 
 
 function NavBar({user, handleLogout}) {
+    const { totalItems } = useCart();
   return (
     <div className='navcont'>
 
@@ -40,6 +42,8 @@ function NavBar({user, handleLogout}) {
 
             <li>
             <p>{<CartIcon />}</p>
+            
+              {/* 🛒 ({totalItems}) */}
             </li>
 
             {user && (

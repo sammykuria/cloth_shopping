@@ -1,29 +1,82 @@
 // src/Components/SimpleCart.js
-import { useCart } from 'react-use-cart';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { processOrder } from '../utils/Checkout';
+import { useNavigate } from 'react-router-dom';
 
-export function SimpleCart() {
-  const { 
-    items, 
-    removeItem, 
-    updateItemQuantity, 
-    cartTotal, 
-    emptyCart 
-  } = useCart();
+// Simple cart functions
+function getCart() {
+  return JSON.parse(localStorage.getItem('cart') || '[]');
+}
 
-  if (items.length === 0) {
+function getCartTotal() {
+  const cart = getCart();
+  return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+}
+
+export function SimpleCart({user}) {
+  const [cartItems, setCartItems] = useState([]);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [navigate] = useNavigate()
+
+  useEffect(() => {
+    setCartItems(getCart());
+  }, []);
+
+    const handleCheckout = async () => {
+    setCheckoutLoading(true);
+    
+    const result = await processOrder(cartItems, user?.id); // user from your auth
+    
+    if (result.success) {
+      alert(`Order #${result.orderId} placed successfully!`);
+      setCartItems([]);
+      navigate('/checkout', { state: { orderId: result.orderId } });
+    } else {
+      alert(`Checkout failed: ${result.error}`);
+    }
+    
+    setCheckoutLoading(false);
+  };
+
+
+  const removeFromCart = (productId) => {
+    const newCart = cartItems.filter(item => item.id !== productId);
+    localStorage.setItem('cart', JSON.stringify(newCart));
+    setCartItems(newCart);
+  };
+
+  const updateQuantity = (productId, newQuantity) => {
+    if (newQuantity < 1) {
+      removeFromCart(productId);
+      return;
+    }
+    
+    const newCart = cartItems.map(item =>
+      item.id === productId ? { ...item, quantity: newQuantity } : item
+    );
+    
+    localStorage.setItem('cart', JSON.stringify(newCart));
+    setCartItems(newCart);
+  };
+
+  if (cartItems.length === 0) {
     return (
       <div className="empty-cart">
         <h2>Your Cart is Empty</h2>
         <p>Add some products to see them here!</p>
+        <button>
+          <Link to='/shopnow'>Buy Now</Link>
+        </button>
       </div>
     );
   }
 
   return (
     <div className="simple-cart">
-      <h2>Shopping Cart ({items.length} items)</h2>
+      <h2>Shopping Cart ({cartItems.length} items)</h2>
       
-      {items.map(item => (
+      {cartItems.map(item => (
         <div key={item.id} className="cart-item">
           <img src={item.image_url} alt={item.name} width="80" />
           
@@ -33,11 +86,11 @@ export function SimpleCart() {
           </div>
 
           <div className="quantity-controls">
-            <button onClick={() => updateItemQuantity(item.id, item.quantity - 1)}>
+            <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>
               -
             </button>
             <span>{item.quantity}</span>
-            <button onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>
+            <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>
               +
             </button>
           </div>
@@ -47,7 +100,7 @@ export function SimpleCart() {
           </div>
 
           <button 
-            onClick={() => removeItem(item.id)}
+            onClick={() => removeFromCart(item.id)}
             className="remove-btn"
           >
             Remove
@@ -55,14 +108,15 @@ export function SimpleCart() {
         </div>
       ))}
 
-      <div className="cart-total">
-        <h3>Total: ${cartTotal.toFixed(2)}</h3>
-        <button onClick={emptyCart} className="clear-btn">
-          Clear Cart
+       <div className="cart-total">
+        <h3>Total: ${getCartTotal().toFixed(2)}</h3>
+        <button
+          onClick={() => navigate('/checkout', { state: { cartItems, user } })}
+          className="checkout-btn"
+        >
+          Proceed to Checkout
         </button>
-        <button className="checkout-btn">
-          Checkout
-        </button>
+
       </div>
     </div>
   );
