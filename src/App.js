@@ -9,8 +9,11 @@ import AllProducts from './Components/AllProducts';
 import Signup from './Components/Signup';
 import AdminDash from './Components/AdminDash';
 import ProductDetail from './Components/ProductDetail';
-import SimpleCart from './Components/SimpleCart';
-import {CartProvider} from 'react-use-cart'
+import Checkout from './Components/Checkout';
+import {SimpleCart} from './Components/SimpleCart';
+import { LowStockAlerts } from './Components/LowStockAlerts';
+import { SalesAnalytics } from './Components/SalesAnalytic';
+// import {CartProvider} from 'react-use-cart'
 
 
 function App() {
@@ -52,7 +55,10 @@ function App() {
        <Route path='/signup' element={<Signup />} />
         <Route path='/shopnow' element={<AllProducts />} />
         <Route path='/details/:id' element={<ProductDetail />} />
-        <Routes path='/cart' element={<SimpleCart />} />
+        <Route path='/cart' element={<SimpleCart user={user} />} />
+        <Route path='/lowstockalert' element={<LowStockAlerts />} />
+         <Route path='/salesanalytic' element={<SalesAnalytics />} />
+         <Route path='/checkout' element={<Checkout />} />
     </Routes>
 
     </div>
