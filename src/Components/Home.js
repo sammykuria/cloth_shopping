@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function Home() {
+function Home({user}) {
   return (
     <div className='flow-container'>
 
@@ -45,11 +45,29 @@ function Home() {
             </div>
              <div  id='tellme'>
               <h3 className='jeseetexty' >Discover a curated collection of luxury items from desinger bags,timeless sophistication,impeccable craftsmanship, and iconic styles - all in one place</h3>
-              <div className='jeseetext'>
-                <Link to='/shopnow'>
-                  <button>Buy Now</button>
-                </Link>
+              
+              <div className="jeseetext">
+                {user ? (
+                  <Link to="/shopnow">
+                    <button>Buy Now</button>
+                  </Link>
+                ) : (
+                  <div>
+                    <p>Please sign in to continue shopping.</p>
+                    <Link to="/login">
+                      <button>Sign In</button>
+                    </Link>
+                    <p>
+                      Don’t have an account?{" "}
+                      <Link to="/signup">
+                        <span style={{ textDecoration: "underline", color: "#007bff" }}>Sign Up</span>
+                      </Link>
+                    </p>
+                  </div>
+                )}
               </div>
+
+
             </div>
 
           </div>

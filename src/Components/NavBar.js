@@ -6,7 +6,6 @@ import { useCart } from 'react-use-cart';
 
 
 function NavBar({user, handleLogout}) {
-    const { totalItems } = useCart();
   return (
     <div className='navcont'>
 

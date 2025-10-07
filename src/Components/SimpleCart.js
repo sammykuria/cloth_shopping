@@ -17,7 +17,7 @@ function getCartTotal() {
 export function SimpleCart({user}) {
   const [cartItems, setCartItems] = useState([]);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
-  const [navigate] = useNavigate()
+  const navigate = useNavigate()
 
   useEffect(() => {
     setCartItems(getCart());
