@@ -16,7 +16,6 @@ export default function Checkout() {
     location: '',
   });
   const [loading, setLoading] = useState(false);
-  const [orderId, setOrderId] = useState(null);
 
   if (!cartItems || cartItems.length === 0) {
     return <h2>Your cart is empty</h2>;
@@ -37,7 +36,6 @@ export default function Checkout() {
     const result = await processOrder(cartItems, user?.id);
 
     if (result.success) {
-      setOrderId(result.orderId);
       alert(`Order #${result.orderId} placed successfully!`);
       
       // Optionally clear cart

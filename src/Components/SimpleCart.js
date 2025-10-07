@@ -1,7 +1,6 @@
 // src/Components/SimpleCart.js
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { processOrder } from '../utils/Checkout';
 import { useNavigate } from 'react-router-dom';
 
 // Simple cart functions
@@ -16,29 +15,13 @@ function getCartTotal() {
 
 export function SimpleCart({user}) {
   const [cartItems, setCartItems] = useState([]);
-  const [checkoutLoading, setCheckoutLoading] = useState(false);
   const navigate = useNavigate()
 
   useEffect(() => {
     setCartItems(getCart());
   }, []);
 
-    const handleCheckout = async () => {
-    setCheckoutLoading(true);
-    
-    const result = await processOrder(cartItems, user?.id); // user from your auth
-    
-    if (result.success) {
-      alert(`Order #${result.orderId} placed successfully!`);
-      setCartItems([]);
-      navigate('/checkout', { state: { orderId: result.orderId } });
-    } else {
-      alert(`Checkout failed: ${result.error}`);
-    }
-    
-    setCheckoutLoading(false);
-  };
-
+ 
 
   const removeFromCart = (productId) => {
     const newCart = cartItems.filter(item => item.id !== productId);

@@ -29,7 +29,7 @@ export async function processOrder(cartItems, userId = null) {
     // Clear cart
     localStorage.removeItem('cart');
     
-    return { success: true, orderId };
+    return { success: true, orderId, totalAmount };
     
   } catch (error) {
     console.error('Checkout error:', error);
