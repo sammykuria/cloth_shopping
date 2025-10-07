@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { CartIcon} from './CartIcon'
 
-function NavBar() {
+
+
+function NavBar({user, handleLogout}) {
   return (
     <div className='navcont'>
 
@@ -26,16 +29,27 @@ function NavBar() {
         </div>
 
         <div className='Accart'>
-            <ul>
-                <li>
-                   <p>Account</p>
-                </li>
+        <ul>
+            <li>
+            {user ? (
+               <p className="user-short">{user.email.slice(0, 3)}</p> // shows email if logged in
+            ) : (
+                <Link to="/login">Sign In</Link>
+            )}
+            </li>
 
-                <li>
-                   <p>Cart</p>
-                </li>
-            </ul>
+            <li>
+            <p>{<CartIcon />}</p>
+            </li>
+
+            {user && (
+            <li>
+                <button onClick={handleLogout}>Logout</button>
+            </li>
+            )}
+        </ul>
         </div>
+
       
     </div>
   )
