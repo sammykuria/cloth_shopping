@@ -199,11 +199,11 @@ const checkUser = useCallback(async () => {
 
       <div className='adminprofile'>
         <ul>
-          <li>
-            <Link to='/profile'>
-            <button onClick={() => setActiveSection('profile')}>Profile</button>
-            </Link>
-          </li>
+         {user && (
+          <button onClick={() => setActiveSection('profile')}>
+            View Profile
+          </button>
+        )}
 
            <li>
             <Link to='/admin'>
@@ -219,15 +219,15 @@ const checkUser = useCallback(async () => {
         </ul>
       </div>
 
-       {/* Render sections dynamically */}
-      <div className="admin-content">
-        <h2>Your Profile</h2>
-        <Profile
-        user={user}
-        role={role}
-        setActiveSection={setActiveSection}
-         />
-      </div>
+     <div className="admin-content">
+  {activeSection === 'profile' && (
+    <Profile
+      user={user}
+      role={role}
+      setActiveSection={setActiveSection}
+    />
+  )}
+</div>
 
 
       
