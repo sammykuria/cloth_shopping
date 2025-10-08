@@ -19,13 +19,13 @@ function NavBar({user,handleLogout}) {
         <div className='cataloguecontainer'>
             <ul>
                 <li>
-                    <Link>Catlogue</Link>
+                    <Link to='/about'>About</Link>
                 </li>
                     <li>
-                    <Link>Men</Link>
+                    <Link to='/shopnow'>Shopping</Link>
                 </li>
                     <li>
-                    <Link>Women</Link>
+                    <Link>Contact</Link>
                 </li>
             </ul>
 
