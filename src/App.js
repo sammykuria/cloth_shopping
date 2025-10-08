@@ -6,16 +6,18 @@ import Home from './Components/Home';
 import Signin from './Components/Signin';
 import NavBar from './Components/NavBar';
 import AllProducts from './Components/AllProducts';
-import Signup from './Components/Signup';
 import AdminDash from './Components/AdminDash';
+import Auth from './Components/Auth';
 import ProductDetail from './Components/ProductDetail';
 import Checkout from './Components/Checkout';
+import About from './Components/About';
 import {SimpleCart} from './Components/SimpleCart';
 import { LowStockAlerts } from './Components/LowStockAlerts';
 import { SalesAnalytics } from './Components/SalesAnalytic';
 import Receipt from './Components/Receipt';
 // import {CartProvider} from 'react-use-cart'
 import { useNavigate } from 'react-router-dom';
+import Profile from './Components/Profile';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -60,7 +62,9 @@ function App() {
       <Route path='/' element={<Home user={user} />} />
        <Route path='/login' element={<Signin />} />
          <Route path='/admin' element={<AdminDash />} />
-       <Route path='/signup' element={<Signup />} />
+          <Route path='/profile' element={<Profile />} />
+       <Route path='/auth' element={<Auth />} />
+       <Route path='/about' element={<About />} />
         <Route path='/shopnow' element={<AllProducts user={user} />} />
         <Route path='/details/:id' element={<ProductDetail />} />
         <Route path='/cart' element={<SimpleCart user={user} />} />
