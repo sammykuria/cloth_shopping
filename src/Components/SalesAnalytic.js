@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
+import { Link } from 'react-router-dom';
+
 
 export function SalesAnalytics() {
   const [salesData, setSalesData] = useState([]);
@@ -36,7 +38,14 @@ export function SalesAnalytics() {
 
   return (
     <div className="sales-analytics">
-      <h2>Sales Dashboard</h2>
+        <div className='nico'>
+            <Link to='/admin'>
+            <i class="fa-solid fa-arrow-left"></i>
+            </Link>
+            <div>
+              <h4>Sales Dashboard</h4>
+            </div>
+        </div>
       <div className="revenue-card">
         <h3>Total Revenue: ${totalRevenue.toFixed(2)}</h3>
       </div>

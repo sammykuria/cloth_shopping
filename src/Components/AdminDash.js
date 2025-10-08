@@ -205,8 +205,8 @@ const checkUser = useCallback(async () => {
           </li>
 
            <li>
-            <Link to='/salesanalytic'>
-            <button onClick={() => setActiveSection('profile')}>Add Product</button>
+            <Link to='/admin'>
+            <button onClick={() => setActiveSection('admin')}>Add Product</button>
             </Link>
           </li>
 
@@ -225,6 +225,7 @@ const checkUser = useCallback(async () => {
             <h2>Profile Info</h2>
             <p>Email: {user?.email}</p>
             <p>Role: {role}</p>
+            <button onClick={() => setActiveSection(null)}>Close</button>
           </div>
         )}
       </div>
