@@ -106,7 +106,6 @@ function AllProducts() {
 
   return (
     <div>
-      <h2>Spend a milli just shopping</h2>
 
       <div className='wazingcontainer'>
         <ul>
@@ -132,6 +131,8 @@ function AllProducts() {
             placeholder='Search Product'
             ></input>
         </div>
+
+        
       </div>
 
 

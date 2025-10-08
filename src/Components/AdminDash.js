@@ -4,6 +4,7 @@ import { supabase } from './supabaseClient'
 import { updateProductStock } from './Utils';
 import { Link } from 'react-router-dom';
 import { SalesAnalytics } from './SalesAnalytic';
+import Profile from './Profile';
 
 
 function AdminDash() {
@@ -199,7 +200,7 @@ const checkUser = useCallback(async () => {
       <div className='adminprofile'>
         <ul>
           <li>
-            <Link>
+            <Link to='/profile'>
             <button onClick={() => setActiveSection('profile')}>Profile</button>
             </Link>
           </li>
@@ -220,14 +221,12 @@ const checkUser = useCallback(async () => {
 
        {/* Render sections dynamically */}
       <div className="admin-content">
-        {activeSection === 'profile' && (
-          <div className="profile-section">
-            <h2>Profile Info</h2>
-            <p>Email: {user?.email}</p>
-            <p>Role: {role}</p>
-            <button onClick={() => setActiveSection(null)}>Close</button>
-          </div>
-        )}
+        <h2>Your Profile</h2>
+        <Profile
+        user={user}
+        role={role}
+        setActiveSection={setActiveSection}
+         />
       </div>
 
 
