@@ -2,9 +2,12 @@ import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from './supabaseClient'
 import { updateProductStock } from './Utils';
+import { Link } from 'react-router-dom';
+import { SalesAnalytics } from './SalesAnalytic';
 
 
 function AdminDash() {
+    const [activeSection, setActiveSection] = useState('add-product')
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
@@ -193,6 +196,40 @@ const checkUser = useCallback(async () => {
         <p><strong>Logged in as:</strong> {user?.email} | <strong>Role:</strong> {role}</p>
       </div>
 
+      <div className='adminprofile'>
+        <ul>
+          <li>
+            <Link>
+            <button onClick={() => setActiveSection('profile')}>Profile</button>
+            </Link>
+          </li>
+
+           <li>
+            <Link to='/salesanalytic'>
+            <button onClick={() => setActiveSection('profile')}>Add Product</button>
+            </Link>
+          </li>
+
+           <li>
+            <Link to='/salesanalytic'>
+            <button onClick={() => setActiveSection('salesanalytic')}>Sales Analytics</button>
+            </Link>
+          </li>
+        </ul>
+      </div>
+
+       {/* Render sections dynamically */}
+      <div className="admin-content">
+        {activeSection === 'profile' && (
+          <div className="profile-section">
+            <h2>Profile Info</h2>
+            <p>Email: {user?.email}</p>
+            <p>Role: {role}</p>
+          </div>
+        )}
+      </div>
+
+
       
       <div className="add-product-form">
         <h2>Add New Product</h2>
@@ -229,6 +266,9 @@ const checkUser = useCallback(async () => {
           </button>
         </form>
       </div>
+
+
+
 
       {/* Edit Product Form (shown when editing) */}
       {editingProduct && (
@@ -333,6 +373,13 @@ const checkUser = useCallback(async () => {
           </div>
         )}
       </div>
+
+       {activeSection === 'sales-analytics' && (
+          <div className="sales-analytics-section">
+            <h2>Sales Analytics</h2>
+            <SalesAnalytics />
+          </div>
+        )}
     </div>
   )
 }

@@ -1,4 +1,3 @@
-// components/SalesAnalytics.js
 import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 
@@ -11,23 +10,29 @@ export function SalesAnalytics() {
   }, []);
 
   async function fetchSalesData() {
-    // Get best selling products
-    const { data: products } = await supabase
+  try {
+    const { data: products, error: productsError } = await supabase
       .from('products')
       .select('name, sold_quantity, price')
       .order('sold_quantity', { ascending: false });
 
-    // Get total revenue
-    const { data: revenue } = await supabase
-      .from('orders')
-      .select('total_amount')
-      .eq('status', 'completed');
+    if (productsError) console.error('Error fetching products:', productsError);
 
-    const total = revenue.reduce((sum, order) => sum + order.total_amount, 0);
-    
-    setSalesData(products);
+    // Compute total revenue from products table directly
+    const total = Array.isArray(products)
+      ? products.reduce(
+          (sum, p) => sum + ((p.sold_quantity || 0) * (p.price || 0)),
+          0
+        )
+      : 0;
+
+    setSalesData(products || []);
     setTotalRevenue(total);
+  } catch (err) {
+    console.error('Unexpected error fetching sales data:', err);
   }
+}
+
 
   return (
     <div className="sales-analytics">
@@ -37,13 +42,17 @@ export function SalesAnalytics() {
       </div>
       
       <h3>Best Sellers</h3>
-      {salesData.map(product => (
-        <div key={product.name} className="product-sales">
-          <span>{product.name}</span>
-          <span>Sold: {product.sold_quantity || 0}</span>
-          <span>Revenue: ${((product.sold_quantity || 0) * product.price).toFixed(2)}</span>
-        </div>
-      ))}
+      {salesData.length === 0 ? (
+        <p>No product data available.</p>
+      ) : (
+        salesData.map(product => (
+          <div key={product.name} className="product-sales">
+            <span>{product.name}</span>
+            <span>Sold: {product.sold_quantity || 0}</span>
+            <span>Revenue: ${((product.sold_quantity || 0) * product.price).toFixed(2)}</span>
+          </div>
+        ))
+      )}
     </div>
   );
 }
