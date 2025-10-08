@@ -7,12 +7,20 @@ function getCartItemCount() {
   return cart.reduce((count, item) => count + item.quantity, 0);
 }
 
-export function CartIcon() {
+export function CartIcon({refreshTrigger}) {
   const [itemCount, setItemCount] = useState(0);
 
   useEffect(() => {
     setItemCount(getCartItemCount());
+  }, [refreshTrigger]);
+
+    useEffect(() => {
+    // Listen for localStorage changes in other tabs
+    const handleStorageChange = () => setItemCount(getCartItemCount());
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
+
 
   return (
     <Link to="/cart" className="cart-icon">

@@ -37,31 +37,42 @@ export function SalesAnalytics() {
 
 
   return (
-    <div className="sales-analytics">
-        <div className='nico'>
-            <Link to='/admin'>
-            <i class="fa-solid fa-arrow-left"></i>
-            </Link>
-            <div>
-              <h4>Sales Dashboard</h4>
-            </div>
-        </div>
-      <div className="revenue-card">
-        <h3>Total Revenue: ${totalRevenue.toFixed(2)}</h3>
-      </div>
-      
-      <h3>Best Sellers</h3>
-      {salesData.length === 0 ? (
-        <p>No product data available.</p>
-      ) : (
-        salesData.map(product => (
-          <div key={product.name} className="product-sales">
-            <span>{product.name}</span>
-            <span>Sold: {product.sold_quantity || 0}</span>
-            <span>Revenue: ${((product.sold_quantity || 0) * product.price).toFixed(2)}</span>
-          </div>
-        ))
-      )}
-    </div>
+   <div className="sales-analytics">
+  <div className="nico">
+    <Link to='/admin'>
+      <i className="fa-solid fa-arrow-left"></i>
+    </Link>
+    <h4>Sales Dashboard</h4>
+  </div>
+
+  <div className="revenue-card">
+    <h3>Total Revenue: ${totalRevenue.toFixed(2)}</h3>
+  </div>
+
+  <h3>Best Sellers</h3>
+  {salesData.length === 0 ? (
+    <p>No product data available.</p>
+  ) : (
+    <table className="sales-table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Sold Quantity</th>
+          <th>Revenue</th>
+        </tr>
+      </thead>
+      <tbody>
+        {salesData.map(product => (
+          <tr key={product.name}>
+            <td>{product.name}</td>
+            <td>{product.sold_quantity || 0}</td>
+            <td>${((product.sold_quantity || 0) * product.price).toFixed(2)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )}
+</div>
+
   );
 }

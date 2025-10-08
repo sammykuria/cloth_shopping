@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
+import { useNavigate } from 'react-router-dom';
+
 
 function getCart() {
   return JSON.parse(localStorage.getItem('cart') || '[]');
@@ -22,7 +24,7 @@ function addToCart(product) {
 export function SimpleAddToCart({ product }) {
   const [stock, setStock] = useState(product.stock_quantity || 0);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate()
   // Fetch current stock from database
   useEffect(() => {
     async function fetchStock() {
@@ -65,7 +67,7 @@ export function SimpleAddToCart({ product }) {
     try {
       addToCart(product);
       alert(`${product.name} added to cart!`);
-      
+      navigate('/shopnow')
       // Update local stock state
       setStock(prev => prev - 1);
       

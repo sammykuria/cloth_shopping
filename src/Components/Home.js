@@ -54,12 +54,12 @@ function Home({user}) {
                 ) : (
                   <div>
                     <p>Please sign in to continue shopping.</p>
-                    <Link to="/login">
+                    <Link to="/auth">
                       <button>Sign In</button>
                     </Link>
                     <p>
                       Don’t have an account?{" "}
-                      <Link to="/signup">
+                      <Link to="/auth">
                         <span style={{ textDecoration: "underline", color: "#007bff" }}>Sign Up</span>
                       </Link>
                     </p>

@@ -64,15 +64,16 @@ function ProductDetail() {
 
   return (
     <div>
-      <h2>Display Product Details</h2>
+      <h2 className='navman'> Product Details</h2>
 
-       <div>
-    <h2>{productDetails.title}</h2>
-      <img src={productDetails.image_url} alt={productDetails.title} width={200} />
-      <p>{productDetails.description}</p>
-      <p><strong>${productDetails.price}</strong></p>
-      <SimpleAddToCart product = {productDetails} />
-    </div>
+
+      <div className="product-details-container">
+        <h2>{productDetails.title}</h2>
+        <img src={productDetails.image_url} alt={productDetails.title} />
+        <p>{productDetails.description}</p>
+        <p><strong>${productDetails.price}</strong></p>
+        <SimpleAddToCart product={productDetails} />
+      </div>
 
      
     </div>

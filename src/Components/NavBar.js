@@ -4,7 +4,10 @@ import { CartIcon} from './CartIcon'
 
 
 
-function NavBar({user, handleLogout}) {
+function NavBar({user,handleLogout}) {
+
+
+
   return (
     <div className='navcont'>
 
@@ -32,9 +35,9 @@ function NavBar({user, handleLogout}) {
         <ul>
             <li>
             {user ? (
-               <p className="user-short">{user.email.slice(0, 3)}</p> // shows email if logged in
+               <p className="user-short"> 👤 {user.email.slice(0, 3)}</p> // shows email if logged in
             ) : (
-                <Link to="/login">Sign In</Link>
+                <Link to="/auth">Sign In</Link>
             )}
             </li>
 
